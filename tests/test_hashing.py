@@ -10,6 +10,5 @@ def test_hashfunction_0():
 def test_hashfunction_1():
     with open('./data/dummy.txt') as data:
         d = data.read() # text should be 'hello world'
-        print(sha3_512(d.encode()))
         assert sha3_512(d.encode()) == 'foo'
 
