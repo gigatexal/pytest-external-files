@@ -11,14 +11,19 @@ EXPECTED_HASH = ("840006653e9ac9e95117a15c915caab"
 
 
 @pytest.fixture(scope="module")
+def data_from_str():
+    return "hello world"
+
+
+@pytest.fixture(scope="module")
 def data_from_file():
     with open(DUMMY_DATA) as data:
         return data.read().strip()
 
 
-def test_hashfunction_str():
-    assert hash_value("hello world") == EXPECTED_HASH
-
-
-def test_hashfunction_file(data_from_file):
-    assert hash_value(data_from_file) == EXPECTED_HASH
+@pytest.mark.parametrize("text", [
+    "data_from_str", "data_from_file"
+])
+def test_hashfunction(text, request):
+    text = request.getfixturevalue(text)
+    assert hash_value(text) == EXPECTED_HASH
