@@ -1,7 +1,8 @@
 import pytest
 
-from hashlib import sha3_512
+from src.hashing import hash_value
 
+DUMMY_DATA = "tests/data/dummy.txt"
 EXPECTED_HASH = ("840006653e9ac9e95117a15c915caab"
                  "81662918e925de9e004f774ff82d707"
                  "9a40d4d27b1b372657c61d46d470304"
@@ -11,17 +12,13 @@ EXPECTED_HASH = ("840006653e9ac9e95117a15c915caab"
 
 @pytest.fixture(scope="module")
 def data_from_file():
-    with open("tests/data/dummy.txt") as data:
+    with open(DUMMY_DATA) as data:
         return data.read().strip()
 
 
-def test_hashfunction_0():
-    encoded_text = "hello world".encode()
-    actual = sha3_512(encoded_text).hexdigest()
-    assert actual == EXPECTED_HASH
+def test_hashfunction_str():
+    assert hash_value("hello world") == EXPECTED_HASH
 
 
-def test_hashfunction_1(data_from_file):
-    encoded_text = data_from_file.encode()
-    actual = sha3_512(encoded_text).hexdigest()
-    assert actual == EXPECTED_HASH
+def test_hashfunction_file(data_from_file):
+    assert hash_value(data_from_file) == EXPECTED_HASH
