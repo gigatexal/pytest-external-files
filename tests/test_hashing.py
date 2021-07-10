@@ -8,6 +8,6 @@ def test_hashfunction_0():
 
 def test_hashfunction_1():
     with open('tests/data/dummy.txt') as data:
-        d = data.read() # text should be 'hello world'
-        assert sha3_512(d.encode()) == '840006653e9ac9e95117a15c915caab81662918e925de9e004f774ff82d7079a40d4d27b1b372657c61d46d470304c88c788b3a4527ad074d1dccbee5dbaa99a'
+        d = data.read().strip() # text should be 'hello world'
+        assert sha3_512(d.encode()).hexdigest() == '840006653e9ac9e95117a15c915caab81662918e925de9e004f774ff82d7079a40d4d27b1b372657c61d46d470304c88c788b3a4527ad074d1dccbee5dbaa99a'
 
